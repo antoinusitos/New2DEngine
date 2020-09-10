@@ -8,6 +8,7 @@ namespace _2DEngine.ExampleGame
         private Entity e;
         private TransformComponent transformComponent;
         private float speed = 100;
+        private TestTool t;
 
         public virtual void Initialize()
         {
@@ -44,7 +45,6 @@ namespace _2DEngine.ExampleGame
 
         public virtual void Draw()
         {
-
         }
     }
 }

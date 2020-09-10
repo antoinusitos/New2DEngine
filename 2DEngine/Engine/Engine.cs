@@ -30,6 +30,7 @@ namespace _2DEngine.Engine
             ContentManager.myContentManager = Content;
 
             //Engine
+            AudioManager.GetInstance();
             myPool = new Pool();
 
             //Game
