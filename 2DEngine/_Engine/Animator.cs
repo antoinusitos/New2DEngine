@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using _2DEngine._Engine._Component;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine
 {
     class Animator : Component
     {

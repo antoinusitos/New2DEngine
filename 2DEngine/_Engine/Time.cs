@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace _2DEngine
+namespace _2DEngine._Engine
 {
     static class Time
     {

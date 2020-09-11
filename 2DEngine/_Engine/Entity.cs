@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using _2DEngine._Engine._Component;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine
 {
     class Entity
     {

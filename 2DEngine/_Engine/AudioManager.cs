@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine
 {
     public struct AudioClip
     {

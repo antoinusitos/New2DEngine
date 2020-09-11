@@ -1,4 +1,4 @@
-﻿namespace _2DEngine
+﻿namespace _2DEngine._Engine
 {
     class ContentManager
     {

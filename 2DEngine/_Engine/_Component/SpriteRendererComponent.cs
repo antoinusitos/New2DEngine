@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine._Component
 {
     class SpriteRendererComponent : Component
     {
@@ -44,6 +44,11 @@ namespace _2DEngine.Engine
             }
 
             Renderer.mySpriteBatch.Draw(myTexture2D, pos, myColor);
+        }
+
+        public void SetTexture(Texture2D aTexture2D)
+        {
+            myTexture2D = aTexture2D;
         }
     }
 }

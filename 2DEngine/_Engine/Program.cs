@@ -7,7 +7,7 @@ namespace _2DEngine
         [STAThread]
         static void Main()
         {
-            using var game = new Engine.Engine();
+            using var game = new _Engine.Engine();
             game.Run();
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace _2DEngine.Engine.Component
+namespace _2DEngine._Engine._Component
 {
     class TransformComponent : Component
     {

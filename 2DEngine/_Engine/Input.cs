@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine
 {
     static class Input
     {

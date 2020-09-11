@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace _2DEngine.Engine
+﻿namespace _2DEngine._Engine._Component
 {
     class Component
     {

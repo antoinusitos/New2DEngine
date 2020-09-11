@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace _2DEngine.Engine
+namespace _2DEngine._Engine
 {
     class Entities
     {
@@ -15,12 +15,10 @@ namespace _2DEngine.Engine
         }
 
         private List<Entity> myEntities = null;
-        private bool myInit = false;
 
         public void Initialize()
         {
             myEntities = new List<Entity>();
-            myInit = true;
         }
 
         public void InternalDraw()
@@ -46,6 +44,18 @@ namespace _2DEngine.Engine
             myEntities.Add(entity);
             entity.Initialize();
             return entity;
+        }
+
+        public void DestroyEntity(Entity anEntity)
+        {
+            //TODO: deal with the pooler
+            anEntity.myIsActive = false;
+            myEntities.Remove(anEntity);
+        }
+
+        public void CleanEntities()
+        {
+            myEntities.Clear();
         }
     }
 }
