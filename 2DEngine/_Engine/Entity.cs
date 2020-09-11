@@ -9,6 +9,13 @@ namespace _2DEngine._Engine
 
         private List<Component> myComponents = null;
 
+        private string myName = "";
+
+        public Entity(string aName)
+        {
+            myName = aName;
+        }
+
         public virtual void Initialize()
         {
             myComponents = new List<Component>

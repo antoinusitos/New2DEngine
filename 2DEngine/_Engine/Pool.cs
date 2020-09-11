@@ -12,7 +12,7 @@ namespace _2DEngine._Engine
             myEntitiesPooled = new List<Entity>();
             for(int i = 0; i < myEntitiesCountToPool; i++)
             {
-                myEntitiesPooled.Add(new Entity());
+                myEntitiesPooled.Add(new Entity(""));
             }
         }
     }   

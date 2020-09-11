@@ -50,5 +50,10 @@ namespace _2DEngine._Engine._Component
         {
             myTexture2D = aTexture2D;
         }
+
+        public Texture2D GetTexture()
+        {
+            return myTexture2D;
+        }
     }
 }

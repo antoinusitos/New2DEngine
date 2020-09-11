@@ -35,12 +35,21 @@ namespace _2DEngine._Engine
             myPool = new Pool();
 
             //Game
-            myEngineWindows = new EngineWindow[] {
-                new _Tools.StartupPage() ,
-                new _ExampleGame.Game() ,
-                new _Tools.AnimatorTool() ,
-                new _Tools.LevelTool() ,
-            };
+            if (Renderer.myInEngine)
+            {
+                myEngineWindows = new EngineWindow[] {
+                    new _Tools.StartupPage() ,
+                    new _ExampleGame.Game() ,
+                    new _Tools.AnimatorTool() ,
+                    new _Tools.LevelTool() ,
+                };
+            }
+            else
+            {
+                myEngineWindows = new EngineWindow[] {
+                    new _ExampleGame.Game() ,
+                };
+            }
             myCurrentWindow = myEngineWindows[0];
         }
 
@@ -85,7 +94,7 @@ namespace _2DEngine._Engine
                 myCurrentWindow.Start();
             }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Renderer.myInEngine && (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)))
                 Exit();
 
             // TODO: Add your update logic here
@@ -95,28 +104,30 @@ namespace _2DEngine._Engine
             Entities.GetInstance().InternalUpdate();
             Input.Update();
 
-            for(int i = 0; i < myEngineWindows.Length; i++)
+            if (Renderer.myInEngine)
             {
-                if (Input.myKeyboardState.IsKeyDown((Keys)(112 + i)))
+                for (int i = 0; i < myEngineWindows.Length; i++)
                 {
-                    myNextWindowIndex = i;
-                    break;
+                    if (Input.myKeyboardState.IsKeyDown((Keys)(112 + i)))
+                    {
+                        myNextWindowIndex = i;
+                        break;
+                    }
                 }
-            }
 
-            if (myNextWindowIndex != myCurrentWindowIndex)
-            {
-                myCurrentWindowIndex = myNextWindowIndex;
-                myCurrentWindow.Stop();
-                myCurrentWindow = myEngineWindows[myNextWindowIndex];
-                myCurrentWindow.Start();
+                if (myNextWindowIndex != myCurrentWindowIndex)
+                {
+                    myCurrentWindowIndex = myNextWindowIndex;
+                    myCurrentWindow.Stop();
+                    myCurrentWindow = myEngineWindows[myNextWindowIndex];
+                    myCurrentWindow.Start();
+                }
+            
             }
 
             //Game
             if(myCurrentWindow != null)
                 myCurrentWindow.Update();
-            //myGame.Update();
-
 
             base.Update(aGameTime);
         }

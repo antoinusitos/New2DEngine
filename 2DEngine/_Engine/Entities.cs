@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+using _2DEngine._Engine._Component;
 
 namespace _2DEngine._Engine
 {
@@ -15,10 +15,12 @@ namespace _2DEngine._Engine
         }
 
         private List<Entity> myEntities = null;
+        private List<CollisionComponent> myCollisions = null;
 
         public void Initialize()
         {
             myEntities = new List<Entity>();
+            myCollisions = new List<CollisionComponent>();
         }
 
         public void InternalDraw()
@@ -37,10 +39,10 @@ namespace _2DEngine._Engine
             }
         }
 
-        public Entity CreateEntity()
+        public Entity CreateEntity(string aName)
         {
             //TODO: deal with the pooler
-            Entity entity = new Entity();
+            Entity entity = new Entity(aName);
             myEntities.Add(entity);
             entity.Initialize();
             return entity;
@@ -56,6 +58,19 @@ namespace _2DEngine._Engine
         public void CleanEntities()
         {
             myEntities.Clear();
+        }
+
+        public CollisionComponent[] GetCollisions()
+        {
+            return myCollisions.ToArray();
+        }
+
+        public void AddCollisionComponent(CollisionComponent aCollisionComponent)
+        {
+            if(!myCollisions.Contains(aCollisionComponent))
+            {
+                myCollisions.Add(aCollisionComponent);
+            }
         }
     }
 }
