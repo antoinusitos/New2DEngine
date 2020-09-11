@@ -7,9 +7,9 @@ namespace _2DEngine._Engine
     {
         public bool myIsActive = true;
 
-        private List<Component> myComponents = null;
+        protected List<Component> myComponents = null;
 
-        private string myName = "";
+        protected string myName = "";
 
         public Entity(string aName)
         {

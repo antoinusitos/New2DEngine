@@ -14,13 +14,9 @@ namespace _2DEngine._ExampleGame
         private RigidBodyComponent rigidbodyComponent;
         private float speed = 100;
 
-        protected Texture2D myPanelTop = null;
-
         public override void Initialize()
         {
             myWindowType = WindowType.GAME;
-            myPanelTop = new Texture2D(Renderer.myGraphicsDevice, 1, 1);
-            myPanelTop.SetData(new[] { Color.White });
         }
 
         public override void LoadContent()
@@ -32,21 +28,20 @@ namespace _2DEngine._ExampleGame
         {
             base.Start();
 
-            e = Entities.GetInstance().CreateEntity("e");
-            e.AddComponent(new SpriteRendererComponent("Textures/test"));
+            e = Entities.GetInstance().CreateEntity("player");
+            e.AddComponent(new SpriteRendererComponent("Textures/player"));
             rigidbodyComponent = e.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
-            rigidbodyComponent.myUseGravity = false;
+            rigidbodyComponent.myUseGravity = true;
             e.AddComponent(new CollisionComponent());
             transformComponent = e.GetComponent<TransformComponent>() as TransformComponent;
+            TransformComponent tc1 = e.GetComponent<TransformComponent>() as TransformComponent;
+            tc1.myPosition = new Vector2(0, 500);
 
-            e2 = Entities.GetInstance().CreateEntity("e2");
+            e2 = Entities.GetInstance().CreateEntity("terrain");
             e2.AddComponent(new SpriteRendererComponent("Textures/test"));
-            //RigidBodyComponent rb = e2.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
-            //rb.myUseGravity = false;
             e2.AddComponent(new CollisionComponent());
-
             TransformComponent tc = e2.GetComponent<TransformComponent>() as TransformComponent;
-            tc.myPosition = new Vector2(500, 100);
+            tc.myPosition = new Vector2(0, 550);
         }
 
         public override void Update()
@@ -54,21 +49,19 @@ namespace _2DEngine._ExampleGame
             if (Input.myKeyboardState.IsKeyDown(Keys.Right))
             {
                 rigidbodyComponent.AddVelocity(Vector2.UnitX);
-                //transformComponent.myPosition.X += speed * Time.myDeltaTime;
             }
             if (Input.myKeyboardState.IsKeyDown(Keys.Left))
             {
                 rigidbodyComponent.AddVelocity(-Vector2.UnitX);
-                //transformComponent.myPosition.X -= speed * Time.myDeltaTime;
             }
 
             if (Input.myKeyboardState.IsKeyDown(Keys.Up))
             {
-                transformComponent.myPosition.Y -= speed * Time.myDeltaTime;
+                rigidbodyComponent.AddVelocity(-Vector2.UnitY * 3);
             }
             if (Input.myKeyboardState.IsKeyDown(Keys.Down))
             {
-                transformComponent.myPosition.Y += speed * Time.myDeltaTime;
+                //transformComponent.myPosition.Y += speed * Time.myDeltaTime;
             }
 
             if (Input.myKeyboardState.IsKeyDown(Keys.P))
@@ -79,7 +72,6 @@ namespace _2DEngine._ExampleGame
 
         public override void Draw()
         {
-            Renderer.mySpriteBatch.Draw(myPanelTop, new Rectangle(0, 0, 256, 256), Color.Chocolate);
         }
 
         public override void Stop()

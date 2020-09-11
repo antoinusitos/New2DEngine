@@ -8,15 +8,6 @@ namespace _2DEngine._Engine._Component
 
         private Vector2 myVelocity = Vector2.Zero;
 
-        private TransformComponent myTransformComponent = null;
-
-        public override void Initialize(Entity anEntity)
-        {
-            base.Initialize(anEntity);
-
-            myTransformComponent = anEntity.GetComponent<TransformComponent>() as TransformComponent;
-        }
-
         public void AddVelocity(Vector2 aDirection)
         {
             myVelocity += aDirection;

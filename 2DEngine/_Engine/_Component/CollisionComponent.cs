@@ -82,7 +82,7 @@ namespace _2DEngine._Engine._Component
             float localBottom = myTransformComponent.myPosition.Y + mySize.Y;
             float localTop = myTransformComponent.myPosition.Y;
 
-            float itsLeft = aCollisionComponent.myTransformComponent.myPosition.X;
+            //float itsLeft = aCollisionComponent.myTransformComponent.myPosition.X;
             float itsRight = aCollisionComponent.myTransformComponent.myPosition.X + aCollisionComponent.mySize.X;
             float itsTop = aCollisionComponent.myTransformComponent.myPosition.Y;
             float itsBottom = aCollisionComponent.myTransformComponent.myPosition.Y + aCollisionComponent.mySize.Y;
@@ -103,7 +103,7 @@ namespace _2DEngine._Engine._Component
             float itsLeft = aCollisionComponent.myTransformComponent.myPosition.X;
             float itsRight = aCollisionComponent.myTransformComponent.myPosition.X + aCollisionComponent.mySize.X;
             float itsTop = aCollisionComponent.myTransformComponent.myPosition.Y;
-            float itsBottom = aCollisionComponent.myTransformComponent.myPosition.Y + aCollisionComponent.mySize.Y;
+            //float itsBottom = aCollisionComponent.myTransformComponent.myPosition.Y + aCollisionComponent.mySize.Y;
 
             return localBottom + myRigidBodyComponent.GetVelocity().Y > itsTop &&
                     localTop < itsTop &&
@@ -120,7 +120,7 @@ namespace _2DEngine._Engine._Component
 
             float itsLeft = aCollisionComponent.myTransformComponent.myPosition.X;
             float itsRight = aCollisionComponent.myTransformComponent.myPosition.X + aCollisionComponent.mySize.X;
-            float itsTop = aCollisionComponent.myTransformComponent.myPosition.Y;
+            //float itsTop = aCollisionComponent.myTransformComponent.myPosition.Y;
             float itsBottom = aCollisionComponent.myTransformComponent.myPosition.Y + aCollisionComponent.mySize.Y;
 
             return localTop + myRigidBodyComponent.GetVelocity().Y < itsBottom &&

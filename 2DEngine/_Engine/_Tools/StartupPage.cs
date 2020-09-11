@@ -35,6 +35,7 @@ namespace _2DEngine._Engine._Tools
             Renderer.mySpriteBatch.DrawString(Renderer.myFont, "Press F2 to enter in Game Mode", new Vector2((Renderer.myWindow_Width / 2) - 150, 300), Color.Black);
             Renderer.mySpriteBatch.DrawString(Renderer.myFont, "Press F3 to enter in Animator Tool", new Vector2((Renderer.myWindow_Width / 2) - 150, 400), Color.Black);
             Renderer.mySpriteBatch.DrawString(Renderer.myFont, "Press F4 to enter in Level Tool", new Vector2((Renderer.myWindow_Width / 2) - 150, 500), Color.Black);
+            Renderer.mySpriteBatch.DrawString(Renderer.myFont, "Press F5 to enter in Object Tool", new Vector2((Renderer.myWindow_Width / 2) - 150, 600), Color.Black);
         }
 
         public override void Stop()

@@ -46,6 +46,11 @@ namespace _2DEngine._Engine._Component
             Renderer.mySpriteBatch.Draw(myTexture2D, pos, myColor);
         }
 
+        public void SetTexturePath(string aPath)
+        {
+            myTexturePath = aPath;
+        }
+
         public void SetTexture(Texture2D aTexture2D)
         {
             myTexture2D = aTexture2D;

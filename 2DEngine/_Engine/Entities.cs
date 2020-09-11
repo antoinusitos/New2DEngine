@@ -48,6 +48,12 @@ namespace _2DEngine._Engine
             return entity;
         }
 
+        public void AddEntity(Entity anEntity)
+        {
+            myEntities.Add(anEntity);
+            anEntity.Initialize();
+        }
+
         public void DestroyEntity(Entity anEntity)
         {
             //TODO: deal with the pooler

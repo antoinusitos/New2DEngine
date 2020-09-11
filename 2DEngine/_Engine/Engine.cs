@@ -42,6 +42,7 @@ namespace _2DEngine._Engine
                     new _ExampleGame.Game() ,
                     new _Tools.AnimatorTool() ,
                     new _Tools.LevelTool() ,
+                    new _Tools.ObjectTool() ,
                 };
             }
             else

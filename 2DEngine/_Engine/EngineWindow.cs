@@ -9,6 +9,7 @@
             GAME,
             ANIMATOR,
             LEVEL,
+            OBJECT
         }
 
         public WindowType myWindowType = WindowType.NONE;
