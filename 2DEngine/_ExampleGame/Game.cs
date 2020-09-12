@@ -42,6 +42,8 @@ namespace _2DEngine._ExampleGame
             e2.AddComponent(new CollisionComponent());
             TransformComponent tc = e2.GetComponent<TransformComponent>() as TransformComponent;
             tc.myPosition = new Vector2(0, 550);
+
+            Resources.SaveEntity(e);
         }
 
         public override void Update()

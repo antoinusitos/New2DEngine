@@ -128,5 +128,14 @@ namespace _2DEngine._Engine._Component
                     localRight > itsLeft &&
                     localLeft < itsRight;
         }
+
+        public override string Save()
+        {
+            return "COMPONENT:Collision";
+        }
+
+        public override void Load()
+        {
+        }
     }
 }

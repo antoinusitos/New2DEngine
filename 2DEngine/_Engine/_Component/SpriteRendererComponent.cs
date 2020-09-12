@@ -60,5 +60,14 @@ namespace _2DEngine._Engine._Component
         {
             return myTexture2D;
         }
+
+        public override string Save()
+        {
+            return "Component:SpriteRenderer";
+        }
+
+        public override void Load()
+        {
+        }
     }
 }

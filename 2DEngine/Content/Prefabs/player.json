@@ -1,0 +1,5 @@
+NAME:player
+COMPONENT:Transform
+Component:SpriteRenderer
+COMPONENT:RigidBody
+COMPONENT:Collision

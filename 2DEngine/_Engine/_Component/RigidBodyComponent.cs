@@ -36,5 +36,14 @@ namespace _2DEngine._Engine._Component
             myVelocity.X = aX;
             myVelocity.Y = aY;
         }
+
+        public override string Save()
+        {
+            return "COMPONENT:RigidBody";
+        }
+
+        public override void Load()
+        {
+        }
     }
 }

@@ -20,5 +20,14 @@
         public virtual void Update()
         {
         }
+
+        public virtual string Save()
+        {
+            return "COMPONENT:";
+        }
+
+        public virtual void Load()
+        {
+        }
     }
 }

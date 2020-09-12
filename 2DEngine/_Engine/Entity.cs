@@ -72,12 +72,22 @@ namespace _2DEngine._Engine
             return null;
         }
 
+        public Component[] GetComponents()
+        {
+            return myComponents.ToArray();
+        }
+
         public Component AddComponent(Component aComponent)
         {
             aComponent.Initialize(this);
             aComponent.LoadContent();
             myComponents.Add(aComponent);
             return aComponent;
+        }
+
+        public string GetName()
+        {
+            return myName;
         }
     }
 }

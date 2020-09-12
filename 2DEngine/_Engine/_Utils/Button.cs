@@ -1,7 +1,6 @@
 ﻿using _2DEngine._Engine._Component;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
 
 namespace _2DEngine._Engine._Utils
 {
@@ -81,12 +80,12 @@ namespace _2DEngine._Engine._Utils
 
         protected virtual void OnClick()
         {
-            Debug.WriteLine("Clicked in " + myName);
+            Debug.Log("Clicked in " + myName);
         }
 
         protected virtual void OnUnClick()
         {
-            Debug.WriteLine("Clicked outside " + myName);
+            Debug.Log("Clicked outside " + myName);
 
         }
     }
