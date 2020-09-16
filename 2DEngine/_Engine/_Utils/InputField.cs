@@ -11,13 +11,13 @@ namespace _2DEngine._Engine._Utils
         public InputField(string aName) : base (aName)
         {
             myLastPressedKeys = new Keys[0];
-            mySpriteRendererComponent.SetTexturePath("Textures/InputField");
+            mySpriteRendererComponent.SetTexturePath("InputField");
         }
 
         public override void Update()
         {
             base.Update();
-            
+
             if (!myCanReceiveInputs)
             {
                 mySpriteRendererComponent.myColor = Color.White;
@@ -36,8 +36,19 @@ namespace _2DEngine._Engine._Utils
 
             for (int i = 0; i < keys.Length; i++)
             {
-                if (!Utils.ContainsKey(myLastPressedKeys, keys[i]) && (int)keys[i] >= 65 && (int)keys[i] <= 90)
-                    myText += keys[i];
+                int keyValue = (int)keys[i];
+                if (!Utils.ContainsKey(myLastPressedKeys, keys[i]) && keyValue >= 65 && keyValue <= 90)
+                {
+                    if (!Input.myKeyboardState.IsKeyDown(Keys.LeftShift) && !Input.myKeyboardState.IsKeyDown(Keys.RightShift))
+                        keyValue += 32;
+                    myText += (char)keyValue;
+                }
+
+                if (myText.Length > 0 && !Utils.ContainsKey(myLastPressedKeys, keys[i]) && keyValue == (int)Keys.Back)
+                    myText = myText.Remove(myText.Length - 1, 1);
+
+                if (!Utils.ContainsKey(myLastPressedKeys, keys[i]) && keyValue == (int)Keys.Space)
+                    myText += ' ';
             }
 
             myLastPressedKeys = keys;
@@ -57,7 +68,19 @@ namespace _2DEngine._Engine._Utils
 
         public override void Draw()
         {
+            base.Draw();
+
+            if (myText != "")
+                myShowName = false;
+            else
+                myShowName = true;
+
             Renderer.mySpriteBatch.DrawString(Renderer.myFont, myText, myTransformComponent.myPosition, Color.Black);
+        }
+
+        public string GetText()
+        {
+            return myText;
         }
     }
 }

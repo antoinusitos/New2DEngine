@@ -12,9 +12,15 @@ namespace _2DEngine._Engine._Utils
         protected bool myIsHover = false;
         protected bool myCanReceiveInputs = false;
 
+        public delegate void OnClickDelegate();
+        public OnClickDelegate myOnClickDelegate = null;
+        public OnClickDelegate myOnUnClickDelegate = null;
+
+        protected bool myShowName = true;
+
         public Button(string aName) : base(aName)
         {
-            mySpriteRendererComponent = new SpriteRendererComponent("Textures/Button");
+            mySpriteRendererComponent = new SpriteRendererComponent("Button");
         }
 
         public override void Initialize()
@@ -45,16 +51,18 @@ namespace _2DEngine._Engine._Utils
 
         public override void Update()
         {
+            if (!myIsActive)
+                return;
+
             base.Update();
 
-            if(EnterButton())
+            if (EnterButton())
             {
                 myIsHover = true;
                 mySpriteRendererComponent.myColor = Color.Gray;
                 if (Input.myMouseState.LeftButton == ButtonState.Pressed && myLastMouseState == ButtonState.Released)
                 {
                     OnClick();
-                    //TODO : add delegate
                 }
             }
             else
@@ -64,7 +72,6 @@ namespace _2DEngine._Engine._Utils
                 if (Input.myMouseState.LeftButton == ButtonState.Pressed && myLastMouseState == ButtonState.Released)
                 {
                     OnUnClick();
-                    //TODO : add delegate
                 }
             }
 
@@ -73,20 +80,23 @@ namespace _2DEngine._Engine._Utils
 
         public override void Draw()
         {
+            if (!myIsActive)
+                return;
+
             base.Draw();
 
-            Renderer.mySpriteBatch.DrawString(Renderer.myFont, myName, myTransformComponent.myPosition, Color.Black);
+            if(myShowName)
+                Renderer.mySpriteBatch.DrawString(Renderer.myFont, myName, myTransformComponent.myPosition, Color.Black);
         }
 
         protected virtual void OnClick()
         {
-            Debug.Log("Clicked in " + myName);
+            myOnClickDelegate?.Invoke();
         }
 
         protected virtual void OnUnClick()
         {
-            Debug.Log("Clicked outside " + myName);
-
+            myOnUnClickDelegate?.Invoke();
         }
     }
 }

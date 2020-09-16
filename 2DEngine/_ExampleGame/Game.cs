@@ -29,19 +29,16 @@ namespace _2DEngine._ExampleGame
             base.Start();
 
             e = Entities.GetInstance().CreateEntity("player");
-            e.AddComponent(new SpriteRendererComponent("Textures/player"));
+            e.AddComponent(new SpriteRendererComponent("player"));
             rigidbodyComponent = e.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
             rigidbodyComponent.myUseGravity = true;
             e.AddComponent(new CollisionComponent());
-            transformComponent = e.GetComponent<TransformComponent>() as TransformComponent;
-            TransformComponent tc1 = e.GetComponent<TransformComponent>() as TransformComponent;
-            tc1.myPosition = new Vector2(0, 500);
+            ((TransformComponent)e.GetComponent<TransformComponent>()).myPosition = new Vector2(0, 500);
 
             e2 = Entities.GetInstance().CreateEntity("terrain");
-            e2.AddComponent(new SpriteRendererComponent("Textures/test"));
+            e2.AddComponent(new SpriteRendererComponent("test"));
             e2.AddComponent(new CollisionComponent());
-            TransformComponent tc = e2.GetComponent<TransformComponent>() as TransformComponent;
-            tc.myPosition = new Vector2(0, 550);
+            ((TransformComponent)e2.GetComponent<TransformComponent>()).myPosition = new Vector2(0, 550);
 
             Resources.SaveEntity(e);
         }
@@ -68,7 +65,7 @@ namespace _2DEngine._ExampleGame
 
             if (Input.myKeyboardState.IsKeyDown(Keys.P))
             {
-                Entities.GetInstance().DestroyEntity(e);
+                e.Destroy();
             }
         }
 

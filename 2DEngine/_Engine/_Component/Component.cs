@@ -3,6 +3,7 @@
     class Component
     {
         protected Entity myOwnerEntity = null;
+        protected bool myIsModified = false;
 
         public virtual void Initialize(Entity anEntity)
         {
@@ -28,6 +29,11 @@
 
         public virtual void Load()
         {
+        }
+
+        public bool GetIsModified()
+        {
+            return myIsModified;
         }
     }
 }

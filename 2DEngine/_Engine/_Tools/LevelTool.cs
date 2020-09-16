@@ -1,12 +1,18 @@
-﻿namespace _2DEngine._Engine._Tools
+﻿using _2DEngine._Engine._Component;
+using _2DEngine._Engine._Utils;
+using Microsoft.Xna.Framework;
+
+namespace _2DEngine._Engine._Tools
 {
     class LevelTool : Tool
     {
+        private Text myToolLabel = null;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            myToolName = "Level Tool";
+            myToolLabel = new Text("Level Tool");
             myWindowType = WindowType.LEVEL;
         }
 
@@ -18,6 +24,9 @@
         public override void Start()
         {
             base.Start();
+
+            myToolLabel.Initialize();
+            ((TransformComponent)myToolLabel.GetComponent<TransformComponent>()).myPosition = new Vector2((Renderer.myWindow_Width / 2) - 6, 0);
         }
 
         public override void Update()
@@ -28,6 +37,8 @@
         public override void Draw()
         {
             base.Draw();
+
+            myToolLabel.InternalDraw();
         }
 
         public override void Stop()

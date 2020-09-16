@@ -16,6 +16,7 @@ namespace _2DEngine._Engine
 
         private List<Entity> myEntities = null;
         private List<CollisionComponent> myCollisions = null;
+        private uint myEntitiedID = 0;
 
         public void Initialize()
         {
@@ -23,6 +24,7 @@ namespace _2DEngine._Engine
             myCollisions = new List<CollisionComponent>();
         }
 
+        //Draw non serialized entities
         public void InternalDraw()
         {
             for(int i = 0; i < myEntities.Count; i++)
@@ -31,6 +33,7 @@ namespace _2DEngine._Engine
             }
         }
 
+        //Update non serialized entities
         public void InternalUpdate()
         {
             for (int i = 0; i < myEntities.Count; i++)
@@ -44,6 +47,7 @@ namespace _2DEngine._Engine
             //TODO: deal with the pooler
             Entity entity = new Entity(aName);
             myEntities.Add(entity);
+            entity.myID = GetID();
             entity.Initialize();
             return entity;
         }
@@ -77,6 +81,13 @@ namespace _2DEngine._Engine
             {
                 myCollisions.Add(aCollisionComponent);
             }
+        }
+        
+        public uint GetID()
+        {
+            uint temp = myEntitiedID;
+            myEntitiedID++;
+            return temp;
         }
     }
 }

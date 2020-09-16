@@ -36,8 +36,8 @@ namespace _2DEngine._Engine._Tools
         {
             base.Draw();
 
-            Renderer.mySpriteBatch.Draw(myPanelTop, new Rectangle(0, 0, Renderer.myWindow_Width, 40), Color.LightGray);
-            Renderer.mySpriteBatch.DrawString(Renderer.myFont, myToolName, new Vector2((Renderer.myWindow_Width / 2) - 6, 0), Color.Black);
+            Renderer.mySpriteBatch.Draw(myPanelTop, new Rectangle(0, 0, Renderer.myWindow_Width, 40), Color.Gray);
+            //Renderer.mySpriteBatch.DrawString(Renderer.myFont, myToolName, new Vector2((Renderer.myWindow_Width / 2) - 6, 0), Color.Black);
         }
 
         public override void Stop()

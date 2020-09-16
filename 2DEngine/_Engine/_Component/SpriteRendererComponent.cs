@@ -26,7 +26,7 @@ namespace _2DEngine._Engine._Component
 
         public override void LoadContent()
         {
-            myTexture2D = ContentManager.GetContentManager().Load<Texture2D>(myTexturePath);
+            myTexture2D = ContentManager.GetContentManager().Load<Texture2D>(Renderer.myTexturePath + myTexturePath);
         }
 
         public override void Draw()
@@ -63,7 +63,14 @@ namespace _2DEngine._Engine._Component
 
         public override string Save()
         {
-            return "Component:SpriteRenderer";
+            string text = "COMPONENT:SpriteRenderer\n";
+            text += "TEXTURE:" + myTexturePath + "\n";
+            text += "COLORR:" + myColor.R.ToString() + "\n";
+            text += "COLORG:" + myColor.G.ToString() + "\n";
+            text += "COLORB:" + myColor.B.ToString() + "\n";
+            text += "COLORA:" + myColor.A.ToString();
+
+            return text;
         }
 
         public override void Load()

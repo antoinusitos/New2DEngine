@@ -79,6 +79,8 @@ namespace _2DEngine._Engine
             Renderer.mySpriteBatch = new SpriteBatch(GraphicsDevice);
             Renderer.myFont = Content.Load<SpriteFont>("Font/Arial");
 
+            Resources.LoadEntities();
+
             //Game
             for (int i = 0; i < myEngineWindows.Length; i++)
             {

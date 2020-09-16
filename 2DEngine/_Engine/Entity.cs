@@ -6,10 +6,13 @@ namespace _2DEngine._Engine
     class Entity
     {
         public bool myIsActive = true;
+        public uint myID = 0;
 
         protected List<Component> myComponents = null;
 
         protected string myName = "";
+
+        protected bool myIsDestroyed = false;
 
         public Entity(string aName)
         {
@@ -85,9 +88,25 @@ namespace _2DEngine._Engine
             return aComponent;
         }
 
+        public void SetName(string aName)
+        {
+            myName = aName;
+        }
+
         public string GetName()
         {
             return myName;
+        }
+
+        public void Destroy()
+        {
+            myIsDestroyed = true;
+            Entities.GetInstance().DestroyEntity(this);
+        }
+
+        public bool GetIsDestroyed()
+        {
+            return myIsDestroyed;
         }
     }
 }
