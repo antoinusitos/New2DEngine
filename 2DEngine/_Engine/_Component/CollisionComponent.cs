@@ -13,6 +13,12 @@ namespace _2DEngine._Engine._Component
         public Vector2 myPosition = Vector2.Zero;
         public Vector2 mySize = Vector2.One * 256;
 
+        public bool myIsTrigger = false;
+
+        public delegate void OnTriggerEvent(CollisionComponent aCollider);
+        public OnTriggerEvent myOnTriggerEnter = null;
+        public OnTriggerEvent myOnTriggerExit = null;
+
         public override void Initialize(Entity anEntity)
         {
             base.Initialize(anEntity);
@@ -43,19 +49,38 @@ namespace _2DEngine._Engine._Component
                     myRigidBodyComponent.GetVelocity().X < 0 && IsTouchingRight(collisions[i])
                     )
                 {
-                    myRigidBodyComponent.SetVelocity(0, myRigidBodyComponent.GetVelocity().Y);
+                    if(collisions[i].myIsTrigger)
+                    {
+                        collisions[i].OnTriggerEnter(this);
+                    }
+                    else
+                    {
+                        myRigidBodyComponent.SetVelocity(0, myRigidBodyComponent.GetVelocity().Y);
+                    }
                 }
 
                 if (myRigidBodyComponent.GetVelocity().Y > 0 && IsTouchingTop(collisions[i]) ||
                     myRigidBodyComponent.GetVelocity().Y < 0 && IsTouchingBottom(collisions[i])
                     )
                 {
-                    myRigidBodyComponent.SetVelocity(myRigidBodyComponent.GetVelocity().X, 0);
+                    if (collisions[i].myIsTrigger)
+                    {
+                        collisions[i].OnTriggerEnter(this);
+                    }
+                    else
+                    {
+                        myRigidBodyComponent.SetVelocity(myRigidBodyComponent.GetVelocity().X, 0);
+                    }
                 }
             }
 
             myTransformComponent.myPosition += myRigidBodyComponent.GetVelocity();
             myRigidBodyComponent.SetVelocity(Vector2.Zero);
+        }
+
+        public void OnTriggerEnter(CollisionComponent aCollider)
+        {
+            myOnTriggerEnter?.Invoke(aCollider);
         }
 
         private bool IsTouchingLeft(CollisionComponent aCollisionComponent)

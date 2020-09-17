@@ -1,7 +1,6 @@
 ﻿using _2DEngine._Engine;
 using _2DEngine._Engine._Component;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace _2DEngine._ExampleGame
@@ -10,7 +9,7 @@ namespace _2DEngine._ExampleGame
     {
         private Entity e;
         private Entity e2;
-        private TransformComponent transformComponent;
+        private Entity e3;
         private RigidBodyComponent rigidbodyComponent;
         private float speed = 100;
 
@@ -39,6 +38,20 @@ namespace _2DEngine._ExampleGame
             e2.AddComponent(new SpriteRendererComponent("test"));
             e2.AddComponent(new CollisionComponent());
             ((TransformComponent)e2.GetComponent<TransformComponent>()).myPosition = new Vector2(0, 550);
+
+            e3 = Entities.GetInstance().CreateEntity("trigger");
+            SpriteRendererComponent src = new SpriteRendererComponent("test")
+            {
+                myColor = Color.Yellow
+            };
+            e3.AddComponent(src);
+            CollisionComponent cc = new CollisionComponent
+            {
+                myIsTrigger = true,
+                myOnTriggerEnter = OnTriggerEntered
+            };
+            e3.AddComponent(cc);
+            ((TransformComponent)e3.GetComponent<TransformComponent>()).myPosition = new Vector2(100, 450);
 
             Resources.SaveEntity(e);
         }
@@ -78,6 +91,14 @@ namespace _2DEngine._ExampleGame
             base.Stop();
 
             Entities.GetInstance().CleanEntities();
+        }
+
+        public void OnTriggerEntered(CollisionComponent cc)
+        {
+            if(cc.GetOwner().GetName() == "player")
+            {
+                cc.GetOwner().Destroy();
+            }
         }
     }
 }

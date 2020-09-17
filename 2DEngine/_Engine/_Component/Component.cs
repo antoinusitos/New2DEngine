@@ -35,5 +35,10 @@
         {
             return myIsModified;
         }
+
+        public Entity GetOwner()
+        {
+            return myOwnerEntity;
+        }
     }
 }
