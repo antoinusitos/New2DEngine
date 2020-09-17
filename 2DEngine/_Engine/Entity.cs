@@ -108,5 +108,19 @@ namespace _2DEngine._Engine
         {
             return myIsDestroyed;
         }
+
+        public string GetEntitySerializationInfo()
+        {
+            string toReturn = "";
+            toReturn += "NAME:" + myName + "\n";
+            toReturn += "ID:" + myID + "\n";
+            toReturn += "ACTIVE:" + myIsActive + "\n";
+            toReturn += "DESTROYED:" + myIsDestroyed + "\n";
+            for (int i = 0; i < myComponents.Count; i++)
+            {
+                toReturn += myComponents[i].Save() + "\n";
+            }
+            return toReturn;
+        }
     }
 }

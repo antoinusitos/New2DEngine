@@ -13,6 +13,10 @@ namespace _2DEngine._ExampleGame
         private RigidBodyComponent rigidbodyComponent;
         private float speed = 100;
 
+        private Scene scene = null;
+
+        private const string sceneToLoad = "test";
+
         public override void Initialize()
         {
             myWindowType = WindowType.GAME;
@@ -27,10 +31,11 @@ namespace _2DEngine._ExampleGame
         {
             base.Start();
 
-            e = Entities.GetInstance().CreateEntity("player");
+            scene = Resources.LoadScene(sceneToLoad);
+
+            /*e = Entities.GetInstance().CreateEntity("player");
             e.AddComponent(new SpriteRendererComponent("player"));
             rigidbodyComponent = e.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
-            rigidbodyComponent.myUseGravity = true;
             e.AddComponent(new CollisionComponent());
             ((TransformComponent)e.GetComponent<TransformComponent>()).myPosition = new Vector2(0, 500);
 
@@ -52,12 +57,13 @@ namespace _2DEngine._ExampleGame
             };
             e3.AddComponent(cc);
             ((TransformComponent)e3.GetComponent<TransformComponent>()).myPosition = new Vector2(100, 450);
-
-            Resources.SaveEntity(e);
+            */
         }
 
         public override void Update()
         {
+            scene.InternalUpdate();
+
             if (Input.myKeyboardState.IsKeyDown(Keys.Right))
             {
                 rigidbodyComponent.AddVelocity(Vector2.UnitX);
@@ -84,6 +90,7 @@ namespace _2DEngine._ExampleGame
 
         public override void Draw()
         {
+            scene.InternalDraw();
         }
 
         public override void Stop()

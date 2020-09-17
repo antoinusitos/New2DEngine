@@ -16,6 +16,10 @@ namespace _2DEngine._Engine._Tools
         private SpriteRendererComponent mySpriteRendererComponent = null;
         private InputField mySpriteName = null;
 
+        private Text myRigidBodyLabel = null;
+        private Button myRigidBodyButton = null;
+        private RigidBodyComponent myRigidBodyComponent = null;
+
         private Entity myEditedEntity = null;
 
         public override void Initialize()
@@ -33,6 +37,9 @@ namespace _2DEngine._Engine._Tools
             mySpriteRendererLabel = new Text("------Sprite Renderer------");
             mySpriteRendererButton = new Button("Add Sprite Renderer");
             mySpriteName = new InputField("Sprite Path");
+
+            myRigidBodyLabel = new Text("------Rigid Body------");
+            myRigidBodyButton = new Button("Add Rigid Body");
         }
 
         public override void LoadContent()
@@ -46,6 +53,9 @@ namespace _2DEngine._Engine._Tools
             mySpriteRendererButton.LoadContent();
             mySpriteRendererButton.myOnClickDelegate += () => AddSpriteRendererComponent();
             mySpriteName.LoadContent();
+
+            myRigidBodyButton.LoadContent();
+            myRigidBodyButton.myOnClickDelegate += () => AddRigidBody();
         }
 
         public override void Start()
@@ -56,12 +66,16 @@ namespace _2DEngine._Engine._Tools
             myObjectNameLabel.Initialize();
             myInputField.Initialize();
             mySaveButton.Initialize();
+
             mySpriteRendererLabel.Initialize();
             mySpriteRendererLabel.myIsActive = false;
             mySpriteRendererButton.Initialize();
             mySpriteName.Initialize();
             mySpriteName.myIsActive = false;
 
+            myRigidBodyLabel.Initialize();
+            myRigidBodyLabel.myIsActive = false;
+            myRigidBodyButton.Initialize();
 
             ((TransformComponent)myToolLabel.GetComponent<TransformComponent>()).myPosition = new Vector2((Renderer.myWindow_Width / 2) - 6, 0);
             
@@ -77,6 +91,10 @@ namespace _2DEngine._Engine._Tools
 
             ((TransformComponent)mySpriteName.GetComponent<TransformComponent>()).myPosition = new Vector2((Renderer.myWindow_Width / 2), 200);
 
+            ((TransformComponent)myRigidBodyLabel.GetComponent<TransformComponent>()).myPosition = new Vector2((Renderer.myWindow_Width / 2), 250);
+
+            ((TransformComponent)myRigidBodyButton.GetComponent<TransformComponent>()).myPosition = new Vector2((Renderer.myWindow_Width / 2), 300);
+
             myEditedEntity = new Entity("") { myID = Entities.GetInstance().GetID() };
             myEditedEntity.Initialize();
         }
@@ -88,6 +106,8 @@ namespace _2DEngine._Engine._Tools
 
             mySpriteName.InternalUpdate();
             mySpriteRendererButton.InternalUpdate();
+
+            myRigidBodyButton.InternalUpdate();
         }
 
 
@@ -105,6 +125,9 @@ namespace _2DEngine._Engine._Tools
             mySpriteRendererLabel.InternalDraw();
             mySpriteName.InternalDraw();
             mySpriteRendererButton.InternalDraw();
+
+            myRigidBodyLabel.InternalDraw();
+            myRigidBodyButton.InternalDraw();
         }
 
         public override void Stop()
@@ -133,6 +156,13 @@ namespace _2DEngine._Engine._Tools
             mySpriteRendererButton.myIsActive = false;
             mySpriteName.myIsActive = true;
             mySpriteRendererLabel.myIsActive = true;
+        }
+
+        public void AddRigidBody()
+        {
+            myRigidBodyComponent = myEditedEntity.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
+            myRigidBodyButton.myIsActive = false;
+            myRigidBodyLabel.myIsActive = true;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace _2DEngine._Engine
     class Scene
     {
         private List<Entity> myEntities = null;
+        private string myName = "";
 
         public void Initialize()
         {
@@ -29,10 +30,11 @@ namespace _2DEngine._Engine
             }
         }
 
-        public void AddEntity(Entity anEntity)
+        public void AddEntity(Entity anEntity, bool aWithInit = true)
         {
             myEntities.Add(anEntity);
-            anEntity.Initialize();
+            if(aWithInit)
+                anEntity.Initialize();
         }
 
         public void DestroyEntity(Entity anEntity)
@@ -45,6 +47,21 @@ namespace _2DEngine._Engine
         public void CleanEntities()
         {
             myEntities.Clear();
+        }
+
+        public Entity[] GetEntities()
+        {
+            return myEntities.ToArray();
+        }
+
+        public void SetName(string aName)
+        {
+            myName = aName;
+        }
+
+        public string GetName()
+        {
+            return myName;
         }
     }
 }

@@ -39,7 +39,12 @@ namespace _2DEngine._Engine._Component
 
         public override string Save()
         {
-            return "COMPONENT:RigidBody";
+            string text = "COMPONENT:RigidBody\n";
+            text += "GRAVITY:" + myUseGravity + "\n";
+            text += "VELOCITYX:" + myVelocity.X + "\n";
+            text += "VELOCITYY:" + myVelocity.Y;
+
+            return text;
         }
 
         public override void Load()

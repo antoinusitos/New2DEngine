@@ -24,7 +24,7 @@
 
         public virtual string Save()
         {
-            return "COMPONENT:";
+            return "COMPONENT:\n";
         }
 
         public virtual void Load()
