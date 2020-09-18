@@ -1,0 +1,54 @@
+using Microsoft.Xna.Framework;
+using _2DEngine._Engine._Component;
+using _2DEngine._Engine;
+
+namespace _2DEngine._ExampleGame
+{
+    class [TOREPLACE] : Component
+    {
+        public override void Initialize(Entity anEntity)
+        {
+            base.Initialize(anEntity);
+        }
+
+        public override void LoadContent()
+        {
+			base.LoadContent();
+        }
+
+        public override void Draw()
+        {
+			base.Draw();
+        }
+
+        public override void Update()
+        {
+			base.Update();
+        }
+
+        public override string Save()
+        {
+            return "COMPONENT:[TOREPLACE]\n";
+        }
+
+        public override void Load()
+        {
+			base.Load();
+        }
+
+        public override void ReadArg(string aLine)
+        {
+			base.ReadArg(aLine);
+        }
+
+        public override void Awake()
+        {
+			base.Awake();
+        }
+
+        public override void Start()
+        {
+			base.Start();
+        }
+    }
+}

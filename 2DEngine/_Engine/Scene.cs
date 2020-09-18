@@ -30,6 +30,22 @@ namespace _2DEngine._Engine
             }
         }
 
+        public void Awake()
+        {
+            for (int i = 0; i < myEntities.Count; i++)
+            {
+                myEntities[i].Awake();
+            }
+        }
+
+        public void Start()
+        {
+            for (int i = 0; i < myEntities.Count; i++)
+            {
+                myEntities[i].Start();
+            }
+        }
+
         public void AddEntity(Entity anEntity, bool aWithInit = true)
         {
             myEntities.Add(anEntity);

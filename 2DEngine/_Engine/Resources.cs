@@ -1,4 +1,6 @@
 ﻿using _2DEngine._Engine._Component;
+using _2DEngine._ExampleGame;
+using _2DEngine._ExampleGame._Component;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +11,13 @@ namespace _2DEngine._Engine
     {
         private const string myPrefabSavePath = "/Content/Prefabs/";
         private const string mySceneSavePath = "/Content/Scenes/";
+        private const string myComponentsSavePath = "/Content/Components/";
+        private const string myEngineComponentsSavePath = "/_Engine/_Component/";
+        private const string myCustomComponentsSavePath = "/_ExampleGame/_Component/";
+        private const string myTemplatesSavePath = "/Templates/";
 
         private static Dictionary<string, Entity> myEntities = null;
+        private static Dictionary<string, Component> myComponent = null;
 
         public static void SaveEntity(Entity anEntity)
         {
@@ -104,7 +111,6 @@ namespace _2DEngine._Engine
                     else if (args[1] == "RigidBody")
                     {
                         RigidBodyComponent rc = e.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
-
                     }
                 }
             }
@@ -114,11 +120,106 @@ namespace _2DEngine._Engine
             file.Close();
         }
 
-        private static Entity ReadEntity(string aName)
+        public static void LoadComponents()
         {
-            Entity e = new Entity(aName);
+            if (myComponent == null)
+                myComponent = new Dictionary<string, Component>();
 
-            return e;
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string fullPath = projectDirectory + myComponentsSavePath;
+            if (Directory.Exists(fullPath))
+            {
+                string[] fileEntries = Directory.GetFiles(fullPath);
+                for (int i = 0; i < fileEntries.Length; i++)
+                {
+                    LoadComponent(fileEntries[i]);
+                }
+                Debug.Log("All Components are loaded !");
+            }
+            else
+            {
+                Debug.Log(fullPath + " is not a valid file or directory.");
+            }
+
+            fullPath = projectDirectory + myEngineComponentsSavePath;
+            if (Directory.Exists(fullPath))
+            {
+                string[] fileEntries = Directory.GetFiles(fullPath);
+                for (int i = 0; i < fileEntries.Length; i++)
+                {
+                    string[] args = fileEntries[i].Split('/');
+                    string name = args[args.Length - 1].Split('.')[0];
+
+                    if(!myComponent.ContainsKey(name))
+                    {
+                        Type type = Type.GetType("_2DEngine._Engine._Component." + name);
+                        Component obj = (Component)Activator.CreateInstance(type);
+                        obj.myID = Entities.GetInstance().GetComponentsID();
+                        SaveComponent(obj);
+                    }
+                }
+            }
+
+            fullPath = projectDirectory + myCustomComponentsSavePath;
+            if (Directory.Exists(fullPath))
+            {
+                string[] fileEntries = Directory.GetFiles(fullPath);
+                for (int i = 0; i < fileEntries.Length; i++)
+                {
+                    string[] args = fileEntries[i].Split('/');
+                    string name = args[args.Length - 1].Split('.')[0];
+
+                    if (!myComponent.ContainsKey(name))
+                    {
+                        Type type = Type.GetType("_2DEngine._ExampleGame._Component." + name);
+                        Component obj = (Component)Activator.CreateInstance(type);
+                        obj.myID = Entities.GetInstance().GetComponentsID();
+                        SaveComponent(obj);
+                    }
+                }
+            }
+        }
+
+        private static void LoadComponent(string aPath)
+        {
+            string line;
+
+            string[] name = aPath.Split('/');
+            string componentName = name[name.Length - 1].Split('.')[0];
+
+            Type type = Type.GetType("_2DEngine._Engine._Component."+componentName);
+            Component obj = (Component)Activator.CreateInstance(type);
+
+            // Read the file and display it line by line.  
+            StreamReader file = new StreamReader(aPath);
+            List<string> lines = new List<string>();
+            while ((line = file.ReadLine()) != null)
+            {
+                lines.Add(line);
+            }
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                string[] args = lines[i].Split(':');
+                if (args[0] == "ID")
+                {
+                    obj.myID = uint.Parse(args[1]);
+                    Entities.GetInstance().SetMaxComponentID(obj.myID);
+                }
+                else if(args[0] == "COMPONENT")
+                {
+                    obj.myName = args[1];
+                }
+                else
+                {
+                    obj.ReadArg(lines[i]);
+                }
+            }
+
+            myComponent.Add(obj.myName, obj);
+
+            file.Close();
         }
 
         public static void SaveScene(Scene aScene)
@@ -181,35 +282,57 @@ namespace _2DEngine._Engine
                 }
                 else if (args[0] == "COMPONENT")
                 {
+                    //TODO : continue with generic init
+                    //Type type = Type.GetType("_2DEngine._Engine._Component." + componentName);
+                    //Component obj = (Component)Activator.CreateInstance(type);
+                    //obj.init, etc..
+
                     if (args[1] == "Transform")
                     {
                         TransformComponent tc = e.GetComponent<TransformComponent>() as TransformComponent;
-                        tc.myPosition.X = float.Parse(lines[i + 1].Split(':')[1]);
-                        tc.myPosition.Y = float.Parse(lines[i + 2].Split(':')[1]);
-                        tc.myRotation = float.Parse(lines[i + 3].Split(':')[1]);
-                        tc.myScale.X = float.Parse(lines[i + 4].Split(':')[1]);
-                        tc.myScale.Y = float.Parse(lines[i + 5].Split(':')[1]);
-                        i += 5;
+                        tc.Initialize(e);
+                        int l = 1;
+                        while (lines[i + l].Split(':')[0] != "COMPONENT")
+                        {
+                            tc.ReadArg(lines[i + l]);
+                            l++;
+                        }
+                        i += l - 1;
                     }
                     else if (args[1] == "SpriteRenderer")
                     {
                         SpriteRendererComponent sr = e.AddComponent(new SpriteRendererComponent("test")) as SpriteRendererComponent;
-                        sr.myTexturePath = lines[i + 1].Split(':')[1];
-                        sr.myColor.R = byte.Parse(lines[i + 2].Split(':')[1]);
-                        sr.myColor.G = byte.Parse(lines[i + 3].Split(':')[1]);
-                        sr.myColor.B = byte.Parse(lines[i + 4].Split(':')[1]);
-                        sr.myColor.A = byte.Parse(lines[i + 5].Split(':')[1]);
+                        sr.Initialize(e);
+                        int l = 1;
+                        while (lines[i + l].Split(':')[0] != "COMPONENT")
+                        {
+                            sr.ReadArg(lines[i + l]);
+                            l++;
+                        }
                         sr.LoadContent();
-                        i += 5;
+                        i += l - 1;
                     }
                     else if (args[1] == "Collision")
                     {
                         CollisionComponent cc = e.AddComponent(new CollisionComponent()) as CollisionComponent;
+                        cc.Initialize(e);
+                        cc.myIsTrigger = bool.Parse(lines[i + 1].Split(':')[1]);
+                        i += 1;
                     }
                     else if (args[1] == "RigidBody")
                     {
                         RigidBodyComponent rc = e.AddComponent(new RigidBodyComponent()) as RigidBodyComponent;
-
+                        rc.Initialize(e);
+                    }
+                    else if (args[1] == "TriggerTest")
+                    {
+                        TriggerTest tt = e.AddComponent(new TriggerTest()) as TriggerTest;
+                        tt.Initialize(e);
+                    }
+                    else if (args[1] == "MovePlayer")
+                    {
+                        MovePlayer mp = e.AddComponent(new MovePlayer()) as MovePlayer;
+                        mp.Initialize(e);
                     }
                 }
             }
@@ -233,6 +356,55 @@ namespace _2DEngine._Engine
             {
                 return null;
             }
+        }
+
+        public static void CreateComponent(string aName, bool aInEngine)
+        {
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string fullPath = "";
+            if(aInEngine)
+                fullPath = projectDirectory + myEngineComponentsSavePath + aName + ".cs";
+            else
+                fullPath = projectDirectory + myCustomComponentsSavePath + aName + ".cs";
+            File.Create(fullPath).Close();
+
+            string templatesPath = projectDirectory + myTemplatesSavePath;
+            if (aInEngine)
+            {
+                templatesPath += "EngineComponent.txt";
+            }
+            else
+            {
+                templatesPath += "GameComponent.txt";
+            }
+
+            string line;
+            StreamReader fileToRead = new StreamReader(templatesPath);
+            string text = "";
+            while ((line = fileToRead.ReadLine()) != null)
+            {
+                text += line + "\n";
+            }
+
+            text = text.Replace("[TOREPLACE]", aName);
+
+            StreamWriter file = new StreamWriter(fullPath);
+            file.Write(text);
+            file.Flush();
+            file.Close();
+        }
+
+        public static void SaveComponent(Component aComponent)
+        {
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string fullPath = projectDirectory + myComponentsSavePath + aComponent.myName + ".json";
+            StreamWriter file = new StreamWriter(fullPath);
+            file.Write(aComponent.Save());
+            Debug.Log("Saved :" + fullPath);
+            file.Flush();
+            file.Close();
         }
     }
 }

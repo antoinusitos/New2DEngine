@@ -7,7 +7,11 @@ namespace _2DEngine._Engine._Tools
     class Tool : EngineWindow
     {
         protected Texture2D myPanelTop = null;
-        protected string myToolName = "";
+
+        public Tool(Engine anEngine) : base(anEngine)
+        {
+
+        }
 
         public override void Initialize()
         {

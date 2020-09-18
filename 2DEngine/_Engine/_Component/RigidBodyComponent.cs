@@ -8,6 +8,11 @@ namespace _2DEngine._Engine._Component
 
         private Vector2 myVelocity = Vector2.Zero;
 
+        public RigidBodyComponent()
+        {
+            myName = "RigidBodyComponent";
+        }
+
         public void AddVelocity(Vector2 aDirection)
         {
             myVelocity += aDirection;
@@ -39,7 +44,8 @@ namespace _2DEngine._Engine._Component
 
         public override string Save()
         {
-            string text = "COMPONENT:RigidBody\n";
+            string text = "COMPONENT:RigidBodyComponent\n";
+            text += "ID:" + myID + "\n";
             text += "GRAVITY:" + myUseGravity + "\n";
             text += "VELOCITYX:" + myVelocity.X + "\n";
             text += "VELOCITYY:" + myVelocity.Y;
@@ -47,7 +53,7 @@ namespace _2DEngine._Engine._Component
             return text;
         }
 
-        public override void Load()
+        public override void Load(string aLine)
         {
         }
     }

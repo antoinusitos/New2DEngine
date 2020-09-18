@@ -12,6 +12,11 @@ namespace _2DEngine._Engine._Component
 
         private TransformComponent myTransformComponent = null;
 
+        public SpriteRendererComponent()
+        {
+            myName = "SpriteRendererComponent";
+        }
+
         public SpriteRendererComponent(string aTexturePath)
         {
             myTexturePath = aTexturePath;
@@ -63,7 +68,8 @@ namespace _2DEngine._Engine._Component
 
         public override string Save()
         {
-            string text = "COMPONENT:SpriteRenderer\n";
+            string text = "COMPONENT:SpriteRendererComponent\n";
+            text += "ID:" + myID + "\n";
             text += "TEXTURE:" + myTexturePath + "\n";
             text += "COLORR:" + myColor.R.ToString() + "\n";
             text += "COLORG:" + myColor.G.ToString() + "\n";
@@ -73,8 +79,23 @@ namespace _2DEngine._Engine._Component
             return text;
         }
 
-        public override void Load()
+        public override void Load(string aLine)
         {
+        }
+
+        public override void ReadArg(string aLine)
+        {
+            string[] args = aLine.Split(':');
+            if(args[0] == "TEXTURE")
+                myTexturePath = args[1];
+            else if(args[0] == "COLORR")
+                myColor.R = byte.Parse(args[1]);
+            else if (args[0] == "COLORG")
+                myColor.G = byte.Parse(args[1]);
+            else if (args[0] == "COLORB")
+                myColor.B = byte.Parse(args[1]);
+            else if (args[0] == "COLORA")
+                myColor.A = byte.Parse(args[1]);
         }
     }
 }

@@ -13,6 +13,11 @@ namespace _2DEngine._Engine._Tools
 
         private Scene myScene = null;
 
+        public LevelTool(Engine anEngine) : base(anEngine)
+        {
+            myToolName = "Level Tool";
+        }
+
         public override void Initialize()
         {
             base.Initialize();

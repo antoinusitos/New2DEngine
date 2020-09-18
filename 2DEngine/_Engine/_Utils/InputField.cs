@@ -37,11 +37,12 @@ namespace _2DEngine._Engine._Utils
             for (int i = 0; i < keys.Length; i++)
             {
                 int keyValue = (int)keys[i];
-                if (!Utils.ContainsKey(myLastPressedKeys, keys[i]) && keyValue >= 65 && keyValue <= 90)
+                if (keyValue >= 65 && keyValue <= 90)
                 {
-                    if (!Input.myKeyboardState.IsKeyDown(Keys.LeftShift) && !Input.myKeyboardState.IsKeyDown(Keys.RightShift))
+                    if (!Input.GetKeyPress(Keys.LeftShift))
                         keyValue += 32;
-                    myText += (char)keyValue;
+                    if(Input.GetKeyPressed(keys[i]))
+                        myText += (char)keyValue;
                 }
 
                 if (myText.Length > 0 && !Utils.ContainsKey(myLastPressedKeys, keys[i]) && keyValue == (int)Keys.Back)

@@ -8,6 +8,11 @@ namespace _2DEngine._Engine._Tools
     {
         private Text myToolLabel = null;
 
+        public AnimatorTool(Engine anEngine) : base(anEngine)
+        {
+            myToolName = "Object Tool";
+        }
+
         public override void Initialize()
         {
             base.Initialize();

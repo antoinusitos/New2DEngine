@@ -22,6 +22,11 @@ namespace _2DEngine._Engine._Tools
 
         private Entity myEditedEntity = null;
 
+        public ObjectTool(Engine anEngine) : base(anEngine)
+        {
+            myToolName = "Object Tool";
+        }
+
         public override void Initialize()
         {
             base.Initialize();

@@ -1,6 +1,6 @@
 ﻿namespace _2DEngine._Engine
 {
-    class EngineWindow
+    public class EngineWindow
     {
         public enum WindowType
         {
@@ -13,9 +13,18 @@
         }
 
         public WindowType myWindowType = WindowType.NONE;
+        public bool myOneFrameWindow = false;
 
         private bool myIsStarted = false;
-        
+
+        protected string myToolName = "";
+
+        protected Engine myEngine = null;
+
+        public EngineWindow(Engine anEngine)
+        {
+            myEngine = anEngine;
+        }
 
         public virtual void Initialize()
         {
@@ -25,6 +34,10 @@
         public virtual void LoadContent()
         {
 
+        }
+
+        public virtual void Awake()
+        {
         }
 
         public virtual void Start()
@@ -50,6 +63,11 @@
         public bool GetIsStarted()
         {
             return myIsStarted;
+        }
+
+        public string GetToolName()
+        {
+            return myToolName;
         }
     }
 }

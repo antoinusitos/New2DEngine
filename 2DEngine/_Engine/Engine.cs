@@ -38,17 +38,19 @@ namespace _2DEngine._Engine
             if (Renderer.myInEngine)
             {
                 myEngineWindows = new EngineWindow[] {
-                    new _Tools.StartupPage() ,
-                    new _ExampleGame.Game() ,
-                    new _Tools.AnimatorTool() ,
-                    new _Tools.LevelTool() ,
-                    new _Tools.ObjectTool() ,
+                    new _Tools.StartupPage(this) ,
+                    new _ExampleGame.Game(this) ,
+                    new _Tools.AnimatorTool(this) ,
+                    new _Tools.LevelTool(this) ,
+                    new _Tools.ObjectTool(this) ,
+                    new _Tools.ComponentTool(this) ,
+                    new _Tools.CompileAll(this) ,
                 };
             }
             else
             {
                 myEngineWindows = new EngineWindow[] {
-                    new _ExampleGame.Game() ,
+                    new _ExampleGame.Game(this) ,
                 };
             }
             myCurrentWindow = myEngineWindows[0];
@@ -79,6 +81,7 @@ namespace _2DEngine._Engine
             Renderer.mySpriteBatch = new SpriteBatch(GraphicsDevice);
             Renderer.myFont = Content.Load<SpriteFont>("Font/Arial");
 
+            Resources.LoadComponents();
             Resources.LoadEntities();
 
             //Game
@@ -123,7 +126,11 @@ namespace _2DEngine._Engine
                     myCurrentWindowIndex = myNextWindowIndex;
                     myCurrentWindow.Stop();
                     myCurrentWindow = myEngineWindows[myNextWindowIndex];
+                    myCurrentWindow.Awake();
                     myCurrentWindow.Start();
+
+                    if (myCurrentWindow.myOneFrameWindow)
+                        myCurrentWindowIndex = 0;
                 }
             
             }
@@ -131,6 +138,8 @@ namespace _2DEngine._Engine
             //Game
             if(myCurrentWindow != null)
                 myCurrentWindow.Update();
+
+            Input.EndUpdate();
 
             base.Update(aGameTime);
         }
@@ -148,10 +157,15 @@ namespace _2DEngine._Engine
             //Game
             if (myCurrentWindow != null)
                 myCurrentWindow.Draw();
-            //myGame.Draw();
+
             Renderer.mySpriteBatch.End();
 
             base.Draw(aGameTime);
+        }
+
+        public EngineWindow[] GetEngineWindows()
+        {
+            return myEngineWindows;
         }
     }
 }

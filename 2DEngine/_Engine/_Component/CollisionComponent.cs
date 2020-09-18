@@ -19,6 +19,11 @@ namespace _2DEngine._Engine._Component
         public OnTriggerEvent myOnTriggerEnter = null;
         public OnTriggerEvent myOnTriggerExit = null;
 
+        public CollisionComponent()
+        {
+            myName = "CollisionComponent";
+        }
+
         public override void Initialize(Entity anEntity)
         {
             base.Initialize(anEntity);
@@ -156,10 +161,15 @@ namespace _2DEngine._Engine._Component
 
         public override string Save()
         {
-            return "COMPONENT:Collision";
+            string text = "COMPONENT:CollisionComponent\n";
+            text += "ID:" + myID + "\n";
+            text += "TRIGGER:" + myIsTrigger;
+            text += "POSITIONX:" + myPosition.X.ToString() + "\n";
+            text += "POSITIONY:" + myPosition.Y.ToString() + "\n";
+            return text;
         }
 
-        public override void Load()
+        public override void Load(string aLine)
         {
         }
     }

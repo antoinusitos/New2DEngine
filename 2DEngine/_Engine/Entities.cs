@@ -16,7 +16,8 @@ namespace _2DEngine._Engine
 
         private List<Entity> myEntities = null;
         private List<CollisionComponent> myCollisions = null;
-        private uint myEntitiedID = 0;
+        private uint myEntitiesID = 0;
+        private uint myComponentsID = 0;
 
         public void Initialize()
         {
@@ -85,9 +86,22 @@ namespace _2DEngine._Engine
         
         public uint GetID()
         {
-            uint temp = myEntitiedID;
-            myEntitiedID++;
+            uint temp = myEntitiesID;
+            myEntitiesID++;
             return temp;
+        }
+
+        public uint GetComponentsID()
+        {
+            uint temp = myComponentsID;
+            myComponentsID++;
+            return temp;
+        }
+
+        public void SetMaxComponentID(uint anID)
+        {
+            if (myComponentsID < anID)
+                myComponentsID = anID;
         }
     }
 }

@@ -53,6 +53,22 @@ namespace _2DEngine._Engine
             Update();
         }
 
+        public void Awake()
+        {
+            for (int i = 0; i < myComponents.Count; i++)
+            {
+                myComponents[i].Awake();
+            }
+        }
+
+        public void Start()
+        {
+            for (int i = 0; i < myComponents.Count; i++)
+            {
+                myComponents[i].Start();
+            }
+        }
+
         public virtual void Draw()
         {
 
