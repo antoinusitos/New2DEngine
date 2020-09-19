@@ -120,7 +120,7 @@ namespace _2DEngine._Engine
             file.Close();
         }
 
-        public static void LoadComponents()
+        /*public static void LoadComponents()
         {
             if (myComponent == null)
                 myComponent = new Dictionary<string, Component>();
@@ -179,9 +179,9 @@ namespace _2DEngine._Engine
                     }
                 }
             }
-        }
+        }*/
 
-        private static void LoadComponent(string aPath)
+        /*private static void LoadComponent(string aPath)
         {
             string line;
 
@@ -220,7 +220,7 @@ namespace _2DEngine._Engine
             myComponent.Add(obj.myName, obj);
 
             file.Close();
-        }
+        }*/
 
         public static void SaveScene(Scene aScene)
         {
@@ -358,7 +358,7 @@ namespace _2DEngine._Engine
             }
         }
 
-        public static void CreateComponent(string aName, bool aInEngine)
+        /*public static void CreateComponent(string aName, bool aInEngine)
         {
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
@@ -393,9 +393,9 @@ namespace _2DEngine._Engine
             file.Write(text);
             file.Flush();
             file.Close();
-        }
+        }*/
 
-        public static void SaveComponent(Component aComponent)
+        /*public static void SaveComponent(Component aComponent)
         {
             string workingDirectory = Environment.CurrentDirectory;
             string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
@@ -405,6 +405,6 @@ namespace _2DEngine._Engine
             Debug.Log("Saved :" + fullPath);
             file.Flush();
             file.Close();
-        }
+        }*/
     }
 }
